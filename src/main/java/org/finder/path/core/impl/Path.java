@@ -1,6 +1,5 @@
 package org.finder.path.core.impl;
 
-import org.finder.path.Direction;
 import org.finder.path.core.DirectionConfig;
 import org.finder.path.core.Finder;
 import org.finder.path.core.PathUtil;
@@ -102,34 +101,12 @@ public class Path implements PathValidator<Path>, Finder<PathNode, PathCharacter
     }
 
     public PathNode determineNextStep(final PathNode currentStep) {
-        final Direction direction;
-        direction = DirectionConfig.valueOfDirection(currentStep.value().value());
-
-        PathCharacter nextStep = currentStep.value();
-        switch (direction) {
-            case NONE:
-                throw new BrokenPathError("Path is broken.");
-            case START:
-            case INTERSECTION:
-            case INTERSECTION_SPECIAL_CHAR:
-                nextStep = lookAround(currentStep).getFirst();
-                break;
-            case UP_OR_DOWN:
-                final boolean isLastStepBehind = currentStep.previousNode().currentIndex() < currentStep.currentIndex();
-                nextStep = isLastStepBehind ? lookDown(currentStep) : lookUp(currentStep);
-                break;
-            case LEFT_OR_RIGHT:
-                final int moveTo = Math.subtractExact(currentStep.currentIndex(), currentStep.previousNode().currentIndex());
-                if (Math.abs(moveTo) == 1) {
-                    nextStep = moveTo > 0 ? lookRight(currentStep) : lookLeft(currentStep);
-                } else {
-                    nextStep = lookAround(currentStep).getFirst();
-                }
-                break;
-            default:
+        final List<PathCharacter> nextStep = lookAround(currentStep);
+        if (nextStep.isEmpty()) {
+            throw new BrokenPathError("Path is broken.");
         }
         currentStep.value().setVisited(true);
-        return new PathNode(Collections.singletonMap(nextStep.characterConfig(), nextStep), nextStep.index(), currentStep).validate();
+        return new PathNode(Collections.singletonMap(nextStep.getFirst().characterConfig(), nextStep.getFirst()), nextStep.getFirst().index(), currentStep).validate();
     }
 
     public List<PathCharacter> lookAround(final PathNode currentNode) {
@@ -154,7 +131,7 @@ public class Path implements PathValidator<Path>, Finder<PathNode, PathCharacter
                     !Objects.equals(currentNode.previousNode().value(), opposite.getFirst().value())) {
                 newStepLookup = newStepLookup.stream()
                         .filter(node -> !Objects.equals(node.value(), opposite.getFirst().value()))
-                        .toList(); //visited ovdje koristiti da pojednostavim????
+                        .toList();
             }
         }
 
