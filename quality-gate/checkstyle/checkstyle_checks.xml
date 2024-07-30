@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!-- Checkstyle-Configuration: HEX external modul Description: none -->
+<module name="Checker">
+
+  <property name='localeCountry' value='' />
+  <property name='localeLanguage' value='' />
+
+  <!-- default severity of findings -->
+  <property name="severity" value="error" />
+  
+  <!-- Support for SuppressWarnings annotation -->
+  <module name="SuppressWarningsFilter" />
+
+  <!-- Global Suppresions -->
+  <module name="SuppressionFilter">
+    <property name="file" value="${config_loc}/${suppressions.file}" />
+  </module>
+
+  <!-- package documentation is requiered. DO NOT allow legacy package.html -->
+  <module name="JavadocPackage">
+    <property name="allowLegacy" value="false" />
+  </module>
+
+  <!--======[ GENERAL FORMATTING ]======================================== -->
+  <!-- Maximum line length - excluding import statements -->
+  <module name="LineLength">
+    <property name="ignorePattern" value="^ *\* *[^ ]+$|^ *@.*|^import" />
+    <property name="max" value="200" />
+    <property name="tabWidth" value="4" />
+  </module>
+
+  <!--======[ TREEWALKER ]================================================== -->
+  <module name="TreeWalker">
+
+    <!-- Support for SuppressWarnings annotation -->
+    <module name="SuppressWarningsHolder" />
+
+    <!-- Spaces used for a TAB. Actually not needed as we forbid tabs above. -->
+    <property name="tabWidth" value="4" />
+
+    <!-- Switch off/on selected checkstyle checks // CHECKSTYLE: MethodLength
+    OFF // CHECKSTYLE: MethodLength ON -->
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat" value="CHECKSTYLE: *(\S+) +OFF" />
+      <property name="onCommentFormat" value="CHECKSTYLE: *(\S+) +ON" />
+      <property name="checkFormat" value="$1" />
+    </module>
+    <!-- Switch off/on ALL checkstyle checks // CHECKSTYLE: OFF // CHECKSTYLE:
+      ON -->
+    <module name="SuppressionCommentFilter">
+      <property name="offCommentFormat" value="CHECKSTYLE: *OFF" />
+      <property name="onCommentFormat" value="CHECKSTYLE: *ON" />
+      <property name="checkFormat" value=".*" />
+    </module>
+    <!-- Switch off check for current line int x = 203; // NOCHECKSTYLE MagicNumber -->
+    <module name="SuppressWithNearbyCommentFilter">
+      <property name="commentFormat" value="NOCHECKSTYLE (\w+)" />
+    </module>
+    <!-- Switch off check for current line int x = 203; // NOCS MagicNumber -->
+    <module name="SuppressWithNearbyCommentFilter">
+      <property name="commentFormat" value="NOCS (\w+)" />
+    </module>
+
+    <module name="SuppressWithNearbyCommentFilter">
+      <property name="commentFormat" value="IGNORED" />
+      <property name="influenceFormat" value="-1" />
+      <property name="checkFormat" value="EmptyBlock" />
+    </module>
+
+    <!--======[ CODE FORMATTING ]=========================================== -->
+    <!-- when wrapping lines, keep this operators at end of line -->
+    <module name="OperatorWrap">
+      <property name="option" value="eol" />
+      <!-- = /= += -= *= %= >>= >>>= <<= ^= |= &= -->
+      <property name="tokens"
+        value="ASSIGN, DIV_ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, STAR_ASSIGN, MOD_ASSIGN, SR_ASSIGN, BSR_ASSIGN, SL_ASSIGN, BXOR_ASSIGN, BOR_ASSIGN, BAND_ASSIGN" />
+    </module>
+    <!-- No whitespace after the following operators -->
+    <module name="NoWhitespaceAfter">
+      <property name="tokens"
+        value="BNOT, DEC, DOT, INC, LNOT, UNARY_MINUS, UNARY_PLUS" />
+    </module>
+    <!-- don't allow whitespace before dot like: Object .hashCode() -->
+    <module name="NoWhitespaceBefore">
+      <property name="allowLineBreaks" value="true" />
+      <property name="tokens" value="DOT" />
+    </module>
+    <!-- There must be a whitespace after comma or semicolon -->
+    <module name="WhitespaceAfter">
+      <property name="tokens" value="COMMA,SEMI" />
+    </module>
+    <!-- Use whitespaces for formatting -->
+    <module name="WhitespaceAround">
+      <property name="tokens"
+        value="ASSIGN,BAND,BAND_ASSIGN,BOR,BOR_ASSIGN,BSR,BSR_ASSIGN,BXOR,BXOR_ASSIGN,COLON,DIV,DIV_ASSIGN,EQUAL,GE,GT,LAND,LE,LITERAL_ASSERT,LITERAL_CATCH,LITERAL_DO,LITERAL_ELSE,LITERAL_FINALLY,LITERAL_FOR,LITERAL_IF,LITERAL_RETURN,LITERAL_SYNCHRONIZED,LITERAL_TRY,LITERAL_WHILE,LOR,LT,MINUS,MINUS_ASSIGN,MOD,MOD_ASSIGN,NOT_EQUAL,PLUS,PLUS_ASSIGN,QUESTION,SL,SLIST,SL_ASSIGN,SR,SR_ASSIGN,STAR,STAR_ASSIGN,LITERAL_ASSERT,TYPE_EXTENSION_AND" />
+    </module>
+    <!-- right curly on the same line like '} else {' -->
+    <module name="RightCurly" />
+
+    <!-- left curly at end of line, except line is longer than 200 chars -->
+    <module name="LeftCurly">
+    </module>
+    <!-- Use upper 'L' for long literals like long x = 100L; -->
+    <module name="UpperEll" />
+
+    <!-- Checks the padding of parentheses for typecasts. -->
+    <module name="TypecastParenPad" />
+    <!-- No padding between method identifier and left para -->
+    <module name="MethodParamPad" />
+
+
+    <!--======[ SIZE ]====================================================== -->
+    <!-- Complain about more than 7 parameters for method or c'tor. -->
+    <module name="ParameterNumber" />
+    <!-- maximum lines of a anonymous inner class -->
+    <module name="AnonInnerLength" />
+
+
+    <!--======[ JAVADOC ]=================================================== -->
+    <!-- Validates Javadoc comments to help ensure they are well formed. -->
+    <module name="JavadocStyle"/>
+    <module name="JavadocStyle">
+      <property name="severity" value="info"/>
+      <property name="checkEmptyJavadoc" value="true" />
+    </module>
+    <!-- For types, the author must be none-empty -->
+    <module name="JavadocType">
+      <property name="authorFormat" value="\S" />
+    </module>
+    <!-- Javadoc for variables -->
+    <module name="JavadocVariable">
+      <property name="scope" value="package" />
+    </module>
+
+
+    <!-- Find TODO and FIXME comments -->
+    <module name="TodoComment">
+      <property name="format" value="(TODO)|(FIXME)" />
+    </module>
+
+
+    <!--======[ NAMING ]==================================================== -->
+    <!-- Constants Uppercase and underscore -->
+    <module name="ConstantName" />
+    <!-- camelCase -->
+    <module name="StaticVariableName" />
+    <!-- camelCase -->
+    <module name="LocalFinalVariableName" />
+    <!-- camelCase -->
+    <module name="LocalVariableName" />
+    <!-- camelCase -->
+    <module name="MemberName" />
+    <!-- camelCase -->
+    <module name="ParameterName" />
+    <!-- camelCase -->
+    <module name="MethodName" />
+    <!-- Types start Uppercase then camelCase -->
+    <module name="TypeName" />
+
+    <!--======[ METRICS ]=================================================== -->
+    <!-- restrict number of operators in a boolean expression -->
+    <module name="BooleanExpressionComplexity" />
+    <!-- Check none-commented source statements. Method: 50, Class: 1500, 
+      File: 2000 -->
+    <module name="JavaNCSS" />
+
+
+    <!--======[ BLOCKS ]==================================================== -->
+    <!-- Avoid unneeded {}, but allow them in switch-case. -->
+    <module name="AvoidNestedBlocks">
+      <property name="allowInSwitchCase" value="true" />
+    </module>
+    <!-- No empty block - no exception! -->
+    <module name="EmptyBlock" />
+    <!-- Always enclose blocks with {} -->
+    <module name="NeedBraces" />
+
+
+    <!--======[ IMPORTS ]=================================================== -->
+    <!-- Avoid java.util.* imports, but allow import static org.junit.Assert.* -->
+    <module name="AvoidStarImport" />
+    <!-- Check for redundant or unneded imports -->
+    <module name="RedundantImport" />
+
+
+    <!--======[ DESIGN ]==================================================== -->
+    <!-- utility classes (only static methods should have a private constructor -->
+    <module name="HideUtilityClassConstructor" />
+    <!-- Class with only private constructors should be final -->
+    <module name="FinalClass" />
+    <!-- Complain on mutable Exceptions -->
+    <module name="MutableException">
+      <message key="mutable.exception"
+        value="The field ''{0}'' must be declared final. Exceptions must be immutable." />
+    </module>
+    <!-- Allow package-private and protected class fields, but no public. -->
+    <module name="VisibilityModifier">
+      <property name="packageAllowed" value="true" />
+      <property name="protectedAllowed" value="true" />
+    </module>
+
+    <!--======[ MISC ]====================================================== -->
+    <!-- enforce String[] args instead of String args[] -->
+    <module name="ArrayTypeStyle" />
+
+
+    <!--======[ MODIFIERS ]================================================= -->
+    <!-- Order of public static final etc -->
+    <module name="ModifierOrder" />
+    <!-- Check for redundant modifiers (like public in interfaces). -->
+    <module name="RedundantModifier" />
+
+
+    <!--======[ CODING ]==================================================== -->
+    <!-- do "Text".equals(str) instead of str.equals("Text") -->
+    <module name="EqualsAvoidNull" />
+    <!-- if equals is implementd, hashCode needs to be implemented to (and 
+      vis-versa) -->
+    <module name="EqualsHashCode" />
+    <!-- Check that equals(Objext) is overwritten if a covariant equals is 
+      implemented. -->
+    <module name="CovariantEquals" />
+    <!-- Order of elements in a class: first static vars, then instance vars, 
+      then constructors, finally methods -->
+    <module name="DeclarationOrder" />
+    <!-- default must be the last in a switch-case -->
+    <module name="DefaultComesLast" />
+    <!-- catch straying semicolons -->
+    <module name="EmptyStatement" />
+    <!-- complain about uncommented fallthru in switch-case -->
+    <module name="FallThrough" />
+    <!-- all parameter must be declared final -->
+    <module name="FinalParameters" />
+    <!-- all local variables, that are never changed mst be declared final -->
+    <module name="FinalLocalVariable" />
+    <!-- complain if field is shadowed by variable or parameter -->
+    <module name="HiddenField">
+      <property name="ignoreSetter" value="true" />
+      <property name="ignoreConstructorParameter" value="true" />
+    </module>
+    <!-- don't create Boolean or String -->
+    <module name="IllegalInstantiation">
+      <property name="classes" value="java.lang.Boolean" />
+      <property name="classes" value="java.lang.String" />
+      <property name="classes" value="javax.naming.InitialContext" />
+    </module>
+    <!-- Throwing java.lang.Error or java.lang.RuntimeException is almost 
+      ignoreConstructorParameter never acceptable. -->
+    <module name="IllegalThrows" />
+    <!-- Catching java.lang.Exception, java.lang.Error or java.lang.RuntimeException 
+      is almost never acceptable. -->
+    <module name="IllegalCatch" />
+    <!-- Checks for assignments in subexpressions, such as in String s = 
+      Integer.toString(i = 2);. -->
+    <module name="InnerAssignment" />
+    <!-- No magic numbers -->
+    <module name="MagicNumber">
+      <property name="ignoreNumbers" value="-1, 0, 1" />
+    </module>
+    <!-- Don't manipulate for-loop control vars inside the loop. -->
+    <module name="ModifiedControlVariable" />
+    <!-- Dont do: int x, y, z; -->
+    <module name="MultipleVariableDeclarations" />
+    <!-- Maximum nested if's: 4 -->
+    <module name="NestedIfDepth">
+      <property name="max" value="4" />
+    </module>
+    <!-- Maximum nested trys -->
+    <module name="NestedTryDepth" />
+    <!-- Well, a class needs a package declaration. -->
+    <module name="PackageDeclaration" />
+    <!-- Don't change the value of a parameter by assigning a new value. -->
+    <module name="ParameterAssignment" />
+    <!-- Warn on boolean expression that could be simplified -->
+    <module name="SimplifyBooleanExpression" />
+    <module name="SimplifyBooleanReturn" />
+
+    <!-- Warn on String compare with == -->
+    <module name="StringLiteralEquality" />
+    <!-- Checks that an overriding clone() method invokes super.clone(). -->
+    <module name="SuperClone" />
+    <!-- Checks that an overriding finalize() method invokes super.finalize(). -->
+    <module name="SuperFinalize" />
+    <!-- complain if there is no default in switch-case -->
+    <module name="MissingSwitchDefault" />
+
+
+    <!--======[ TEXT BASED CHECKS ]========================================= -->
+    <!-- Complain about everything that looks like a print to stdout/err. -->
+    <module name="Regexp">
+      <property name="format"
+        value="printStackTrace|System.out.print|System.err.print" />
+      <property name="message" value="Print Methode" />
+      <property name="illegalPattern" value="true" />
+      <property name="ignoreComments" value="true" />
+    </module>
+    <module name="Regexp">
+      <property name="format" value="@Transactional *\n *public *class" />
+      <property name="message"
+        value="Do not use @Transactional at class level. Directly annotate single methods instead." />
+      <property name="illegalPattern" value="true" />
+      <property name="ignoreComments" value="true" />
+    </module>
+    <module name="RegexpSinglelineJava">
+      <metadata name="net.sf.eclipsecs.core.comment" value="Logger instantiation check" />
+      <property name="id" value="loggerInst" />
+      <property name="format" value="getApplicationLogger\(.*.class\);" />
+      <property name="message"
+        value="Logger must be instantiated with class name, use getCanonicalName()." />
+    </module>
+    <module name="RegexpSinglelineJava">
+      <property name="format" value="StringBuffer" />
+      <property name="message"
+        value="Do not use StringBuffer, use StringBuilder instead." />
+      <property name="ignoreComments" value="true" />
+    </module>
+
+  </module>
+
+</module>

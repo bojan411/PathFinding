@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/.*.xml" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/.*.xpi"/>
+  <suppress checks="[a-zA-Z0-9]*" files=".*/target/generated-sources.*" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/*.pdf" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/scripts/jquery.js" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/src/generated/.*" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/src/main/resources/.*" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*/.*.xpi"/>
+  <suppress checks="JavadocMethod" files="[\\/]mock[\\/]" />
+  <suppress checks="JavadocPackage" files="[\\/]src[\\/]test[\\/]" />
+  <suppress checks="JavadocPackage" files="[\\/]src[\\/]int-test[\\/]" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*.png" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*.jpg" />
+  <suppress checks="[a-zA-Z0-9]*" files=".*.pfx" />
+</suppressions>
