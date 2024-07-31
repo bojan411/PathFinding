@@ -62,7 +62,7 @@ Then run `java -jar target/pathFinderApp.jar`
 
 Example
 
-`java -jar target/path-find.jar -f src/test/resources/basic.txt -s @ -e x`
+`java -jar target/pathFinderApp.jar -f src/test/resources/basic.txt -s @ -e x`
 
 File will be loaded from `src/test/resources/basic.txt` and START character will be set to @
 and END character will be set to x.
